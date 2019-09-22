@@ -9,5 +9,5 @@ from django.conf.urls import url , include
 
 urlpatterns = [
   path('open_rest/' , views.get_available_resturants , name='get_resturants'),
-  path('get_rest/' , views.GetResturants , name = "Get rest"),
+  # path('get_rest/' , views.GetResturants , name = "Get rest"),
 ]
