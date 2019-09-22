@@ -86,14 +86,12 @@ def get_unique(ordered_dicts ):
 @api_view(["GET"])
 def get_available_resturants(request):
     q_day , q_time = parse_datetime(request.query_params['date'] , request.query_params['time'])
-    query_set = RestOpening.objects.filter(day= q_day, st_time__lte =q_time , end_time__gt=q_time)
-    list_1 = RestOpening.objects.filter(Q(st_time__lte=F('end_time')), Q(st_time__lte=q_time), end_time__gte=q_time)
-    list_2 = RestOpening.objects.filter(Q(st_time__gt=F('end_time')), Q(st_time__lte=q_time) | Q(end_time__gte=q_time))
+    # query_set = RestOpening.objects.filter(day= q_day, st_time__lte =q_time , end_time__gt=q_time)
+    list_1 = RestOpening.objects.filter( Q(st_time__lte=F('end_time')), Q(st_time__lte=q_time), end_time__gt=q_time ,day=q_day)
+    list_2 = RestOpening.objects.filter(Q(st_time__gt=F('end_time')), Q(st_time__lte=q_time) | Q(end_time__gt=q_time) ,day=q_day )
 
-    concat_list = (list_1 | list_2)
-    print(type(concat_list))
+    concat_list = list_1 | list_2
     serlized = RestOpeningSerializer(concat_list , many = True)
-    print(serlized.data[0]['Name'])
     return Response(get_unique(serlized.data) , status = status.HTTP_200_OK)
 
 

@@ -20,7 +20,7 @@ class RestOpening(models.Model):
     day = models.CharField(max_length = 1 , choices = APPROVAL_CHOICES)
     st_time = models.TimeField('start_time' )
     end_time = models.TimeField('end_time')
-    all_day = models.BooleanField('open all day' , default=False)
+    # all_day = models.BooleanField('open all day' , default=False)
 
 
 
